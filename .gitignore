@@ -1,4 +1,7 @@
 db/
 data/
-config/config.php
+config/
+data_scraped/
+grafana-data/
+monitoring/
 *.log
