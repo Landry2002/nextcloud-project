@@ -25,6 +25,7 @@ services:
     volumes:
       - ./data:/var/www/html/data
       - ./config:/var/www/html/config
+      - ./data_scraped:/var/www/html/data/scraped
     environment:
       MYSQL_HOST: db
       MYSQL_DATABASE: nextcloud
@@ -32,6 +33,15 @@ services:
       MYSQL_PASSWORD: nextcloud
     depends_on:
       - db
+    networks:
+      - nextcloud_network
+
+  scraper:
+    build: ./scraper
+    volumes:
+      - ./data_scraped:/data
+    restart: unless-stopped
+    command: sh -c "while true; do python scraper.py; sleep 3600; done"
     networks:
       - nextcloud_network
 
